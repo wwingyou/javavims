@@ -80,7 +80,7 @@ vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper window'
 vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right window' })
 
 -- Shortcut to execute external program
-vim.keymap.set('n', '!', ':!', { desc = 'Execute external program shortcut' })
+vim.keymap.set('n', '!', ':!', { desc = 'Shortcut of executing external program' })
 
 -- Press 'R' to substitute word under cursor.
 -- NOTE: 'R' has other default action. Since I don't use it, exchanged it.
