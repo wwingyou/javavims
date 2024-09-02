@@ -95,17 +95,8 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- Save file if modified before sourcing
-vim.api.nvim_create_autocmd('SourcePre', {
-  desc = 'Save file if modified before sourcing',
-  group = vim.api.nvim_create_augroup('write-before-souring', { clear = true }),
-  callback = function(ev)
-    local is_modified = vim.api.nvim_buf_get_option(ev.buf, 'modified')
-    if is_modified then
-      vim.cmd('write ' .. ev.file)
-    end
-  end,
-})
-
 -- Require lazy.nvim
 require 'config.lazy'
+
+-- Set colorscheme 'gruvbox'
+vim.cmd 'colorscheme gruvbox'
