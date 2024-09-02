@@ -57,9 +57,6 @@ vim.opt.splitright=true
 -- Move cursor at the first non-blank character of the line. Useful maybe?
 vim.opt.startofline=true
 
--- Set colorscheme.
--- vim.cmd 'colorscheme retrobox'
-
 -- Enable matchit.
 vim.cmd 'packadd! matchit'
 
@@ -109,3 +106,6 @@ vim.api.nvim_create_autocmd('SourcePre', {
     end
   end,
 })
+
+-- Require lazy.nvim
+require 'config.lazy'
