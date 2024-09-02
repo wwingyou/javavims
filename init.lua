@@ -23,7 +23,7 @@ vim.opt.foldcolumn='2'
 vim.opt.foldmethod='syntax'
 -- vim.opt.foldtext='' TODO: Define custom foldtext function
 
--- Line break options
+-- Line break options.
 vim.opt.wrap=true
 vim.opt.linebreak=true
 vim.opt.breakindent=true
@@ -38,20 +38,20 @@ vim.opt.confirm=true
 vim.opt.cursorline=true
 vim.opt.cursorlineopt="both"
 
--- Always add 'g' flag for substitution
+-- Always add 'g' flag for substitution.
 vim.opt.gdefault=true
 
--- Use smartcase search
+-- Use smartcase search.
 vim.opt.ignorecase=true
 vim.opt.smartcase=true
 
--- Set list mode by default
+-- Set list mode by default.
 vim.opt.list=true
 
--- Scroll options
+-- Scroll options.
 vim.opt.scrolloff=10
 
--- Split options
+-- Split options.
 vim.opt.splitright=true
 
 -- Move cursor at the first non-blank character of the line. Useful maybe?
@@ -60,5 +60,27 @@ vim.opt.startofline=true
 -- Set colorscheme.
 vim.cmd 'colorscheme retrobox'
 
--- Enable matchit
+-- Enable matchit.
 vim.cmd 'packadd! matchit'
+
+-- Set nohlsearch on pressing <ESC>.
+vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
+
+-- Resize window size with +, -.
+vim.keymap.set('n', '+', '<C-w>+', { desc = 'Increase current window size' })
+vim.keymap.set('n', '-', '<C-w>-', { desc = 'Decrease current window size' })
+
+-- Move between windows with h, j, k, l.
+vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to left window' })
+vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to lower window' })
+vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper window' })
+vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right window' })
+
+-- Highlight on yank.
+vim.api.nvim_create_autocmd('TextYankPost', {
+  desc = 'Highlight when yanking text',
+  group = vim.api.nvim_create_augroup('highlight-yank', { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
