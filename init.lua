@@ -27,8 +27,8 @@ vim.opt.foldmethod='syntax'
 vim.opt.wrap=true
 vim.opt.linebreak=true
 vim.opt.breakindent=true
-vim.opt.showbreak="~"
-vim.opt.breakindentopt="sbr,shift:2"
+vim.opt.showbreak='~'
+vim.opt.breakindentopt='sbr,shift:2'
 
 -- Ask to save when leaving buffer without saving.
 vim.opt.confirm=true
@@ -36,7 +36,7 @@ vim.opt.confirm=true
 -- Highlight cursor column and line. 
 -- vim.opt.cursorcolumn=true
 vim.opt.cursorline=true
-vim.opt.cursorlineopt="both"
+vim.opt.cursorlineopt='both'
 
 -- Always add 'g' flag for substitution.
 vim.opt.gdefault=true
@@ -53,6 +53,7 @@ vim.opt.scrolloff=10
 
 -- Split options.
 vim.opt.splitright=true
+vim.opt.splitbelow=true
 
 -- Move cursor at the first non-blank character of the line. Useful maybe?
 vim.opt.startofline=true
@@ -88,6 +89,13 @@ vim.keymap.set('n', 'R', function()
   local word = vim.fn.expand('<cword>')
   return ':%s/' .. word .. '/' 
 end, { expr = true, desc = 'Substitute word under cursor' })
+
+-- Open terminal
+-- TODO: It will be much better to open terminal with nvim api. (nvim_open_term())
+vim.keymap.set('n', '<leader>1', '<cmd>split term://$SHELL<CR>', { desc = 'Open termnial' })
+
+-- Exit terminal mode with <ESC>
+vim.keymap.set('t', '<ESC>', '<C-\\><C-N>', { desc = 'Close terminal' })
 
 -- Highlight on yank.
 vim.api.nvim_create_autocmd('TextYankPost', {
