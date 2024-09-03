@@ -57,6 +57,9 @@ vim.opt.splitright=true
 -- Move cursor at the first non-blank character of the line. Useful maybe?
 vim.opt.startofline=true
 
+-- Show only one status line at the bottom
+-- vim.opt.laststatus=3
+
 -- Enable matchit.
 vim.cmd 'packadd! matchit'
 
