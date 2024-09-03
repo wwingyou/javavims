@@ -68,6 +68,9 @@ vim.opt.splitbelow=true
 -- Move cursor at the first non-blank character of the line. Useful maybe?
 vim.opt.startofline=true
 
+-- Set popup menu height.
+vim.opt.pumheight=20
+
 -- Show only one status line at the bottom
 -- vim.opt.laststatus=3
 
