@@ -23,7 +23,11 @@ return {
     -- vim.keymap.set({"i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true})
 
     -- This keymap is pretty good. May I use this?
-    vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-    vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+    vim.keymap.set({"i", "s"}, "<C-L>", function()
+      ls.jump( 1)
+    end, { desc = 'Luasnip jump forward', silent = true })
+    vim.keymap.set({"i", "s"}, "<C-J>", function()
+      ls.jump(-1)
+    end, { desc = 'Luasnip jump backward', silent = true})
   end
 }
