@@ -135,12 +135,16 @@ vim.api.nvim_create_autocmd('FileType', {
       root_dir = vim.fs.root(ev.buf, { 'init.lua', 'init.vim' }),
       settings = {
         Lua = {
+          runtime = {
+            -- 'init.lua' has higher proirity so that I can load modele properly.
+            path = { '?/init.lua', '?.lua' },
+          },
           workspace = {
             library = {
               -- Add vim standard library.
               vim.env.VIMRUNTIME,
               -- Add lazy plugin libraries,
-              vim.fn.stdpath('data') .. '/lazy'
+              vim.fn.stdpath('data') .. '/lazy',
             }
           }
         }
