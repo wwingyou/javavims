@@ -14,16 +14,16 @@ return {
     -- FIXME: This code cannot pregress to the last position when continually jumping forward in insert mode.
     -- Problem is fixed if I jump in select mode or returning from the end in select mode. Why?
     -- vim.keymap.set({"i", "s"}, "<Tab>", function()
-      --   if ls.expand_or_jumpable() then
-      --     ls.jump(1)
-      --   else
-      --     return '<Tab>'
-      --   end
-      -- end, { silent = true, expr = true })
-      -- vim.keymap.set({"i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true})
+    --   if ls.expand_or_jumpable() then
+    --     ls.jump(1)
+    --   else
+    --     return '<Tab>'
+    --   end
+    -- end, { silent = true, expr = true })
+    -- vim.keymap.set({"i", "s"}, "<S-Tab>", function() ls.jump(-1) end, {silent = true})
 
-      -- This keymap is pretty good. May I use this?
-      vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
-      vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
+    -- This keymap is pretty good. May I use this?
+    vim.keymap.set({"i", "s"}, "<C-L>", function() ls.jump( 1) end, {silent = true})
+    vim.keymap.set({"i", "s"}, "<C-J>", function() ls.jump(-1) end, {silent = true})
   end
 }
