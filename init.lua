@@ -136,7 +136,7 @@ vim.api.nvim_create_autocmd('FileType', {
       settings = {
         Lua = {
           runtime = {
-            -- 'init.lua' has higher proirity so that I can load modele properly.
+            -- 'init.lua' has higher proirity so that It can load modele properly.
             path = { '?/init.lua', '?.lua' },
           },
           workspace = {
