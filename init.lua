@@ -74,6 +74,7 @@ vim.opt.pumheight=20
 -- Show only one status line at the bottom
 -- vim.opt.laststatus=3
 
+
 -- Enable matchit.
 vim.cmd 'packadd! matchit'
 
