@@ -1,3 +1,13 @@
+-- Set global variables.
+vim.g.mapleader=' '
+vim.g.maplocalleader=' '
+
+-- Require lazy.nvim
+require 'config.lazy'
+
+-- Set colorscheme 'gruvbox'
+vim.cmd 'colorscheme gruvbox'
+
 -- Always indent with 2 space.
 vim.opt.expandtab=true
 vim.opt.tabstop=2
@@ -109,6 +119,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
 -- LSP configs with mason.
 local mason_bin_dir = vim.fn.stdpath('data') .. '/mason/bin'
 
+-- Load cmp_nvim_lsp capabilities
+local capabilites = require('cmp_nvim_lsp').default_capabilities()
+
 -- Lua language server for nvim configuration.
 vim.api.nvim_create_autocmd('FileType', {
   desc = 'Start lua-language-server when lua filetype is attached',
@@ -118,13 +131,16 @@ vim.api.nvim_create_autocmd('FileType', {
     vim.lsp.start {
       name = 'lua-language-server',
       cmd = { mason_bin_dir .. '/lua-language-server' },
+      capabilities = capabilites,
       root_dir = vim.fs.root(ev.buf, { 'init.lua', 'init.vim' }),
       settings = {
         Lua = {
           workspace = {
             library = {
-              -- Add vim standart library.
-              vim.env.VIMRUNTIME .. '/lua/vim'
+              -- Add vim standard library.
+              vim.env.VIMRUNTIME,
+              -- Add lazy plugin libraries,
+              vim.fn.stdpath('data') .. '/lazy'
             }
           }
         }
@@ -179,10 +195,3 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.opt.updatetime=1000
   end
 })
-
-
--- Require lazy.nvim
-require 'config.lazy'
-
--- Set colorscheme 'gruvbox'
-vim.cmd 'colorscheme gruvbox'
