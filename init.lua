@@ -87,7 +87,7 @@ vim.keymap.set('n', '!', ':!', { desc = 'Shortcut of executing external program'
 -- NOTE: 'R' has other default action. Since I don't use it, exchanged it.
 vim.keymap.set('n', 'R', function()
   local word = vim.fn.expand('<cword>')
-  return ':%s/' .. word .. '/' 
+  return ':%s/' .. word .. '/'
 end, { expr = true, desc = 'Substitute word under cursor' })
 
 -- Open terminal
@@ -105,6 +105,81 @@ vim.api.nvim_create_autocmd('TextYankPost', {
     vim.highlight.on_yank()
   end,
 })
+
+-- LSP configs with mason.
+local mason_bin_dir = vim.fn.stdpath('data') .. '/mason/bin'
+
+-- Lua language server for nvim configuration.
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'Start lua-language-server when lua filetype is attached',
+  pattern = 'lua',
+  group = vim.api.nvim_create_augroup('lsp-lua', { clear = true }),
+  callback = function(ev)
+    vim.lsp.start {
+      name = 'lua-language-server',
+      cmd = { mason_bin_dir .. '/lua-language-server' },
+      root_dir = vim.fs.root(ev.buf, { 'init.lua', 'init.vim' }),
+      settings = {
+        Lua = {
+          workspace = {
+            library = {
+              -- Add vim standart library.
+              vim.env.VIMRUNTIME .. '/lua/vim'
+            }
+          }
+        }
+      }
+    }
+  end
+})
+
+-- Set LSP keymaps when LSP is attached.
+vim.api.nvim_create_autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client == nil then
+      return
+    end
+    if client.supports_method('textDocument/codeAction') then
+      vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'LSP code action' })
+    end
+    if client.supports_method('textDocument/declaration') then
+      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP go to declaration' })
+    end
+    if client.supports_method('textDocument/definition') then
+      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP go to definition' })
+    end
+    if client.supports_method('textDocument/implementation') then
+      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'LSP go to implementation' })
+    end
+    if client.supports_method('textDocument/typeDefinition') then
+      vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, { desc = 'LSP go to type definition' })
+    end
+    if client.supports_method('textDocument/references') then
+      vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'LSP find references' })
+    end
+    if client.supports_method('textDocument/hover') then
+      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP hover' })
+    end
+    if client.supports_method('textDocument/rename') then
+      -- If supports, replace 'R' keymap to rename lsp function. If not, use substitution instead.
+      vim.keymap.set('n', 'R', vim.lsp.buf.rename, { desc = 'LSP rename' })
+    end
+
+    -- Show diagnostic window on CursorHold.
+    vim.api.nvim_create_autocmd('CursorHold', {
+      desc = 'Show diagnostic window on CursorHold',
+      group = vim.api.nvim_create_augroup('diagnostic-on-cursorhold', { clear = true }),
+      callback = function()
+        vim.diagnostic.open_float()
+      end
+    })
+
+    -- Reduce updatetime to open up diagnostic faster
+    vim.opt.updatetime=1000
+  end
+})
+
 
 -- Require lazy.nvim
 require 'config.lazy'
