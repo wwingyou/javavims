@@ -14,7 +14,7 @@ return {
       lualine_b = { 'branch' },
       lualine_c = { '%=', { 'filename', file_status = true } },
       lualine_x = {},
-      lualine_y = { 'encoding', 'filetype', 'progress' },
+      lualine_y = { 'encoding', 'progress' },
       lualine_z = { 'location' }
     }
   }
