@@ -10,3 +10,7 @@ end
 
 -- Set fold level 1 by default to show root class.
 vim.opt.foldlevel=1
+
+-- Map all lsp method keymaps.
+local mapper = require'utils.lsp-keymapper'
+mapper.map_methods(mapper.all_methods)

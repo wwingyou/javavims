@@ -210,36 +210,27 @@ vim.api.nvim_create_autocmd('FileType', {
 })
 
 -- Set LSP keymaps when LSP is attached.
+local mapper = require'utils.lsp-keymapper'
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client == nil then
       return
     end
-    if client.supports_method('textDocument/codeAction') then
-      vim.keymap.set('n', '<leader>a', vim.lsp.buf.code_action, { desc = 'LSP code action' })
-    end
-    if client.supports_method('textDocument/declaration') then
-      vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = 'LSP go to declaration' })
-    end
-    if client.supports_method('textDocument/definition') then
-      vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { desc = 'LSP go to definition' })
-    end
-    if client.supports_method('textDocument/implementation') then
-      vim.keymap.set('n', 'gi', vim.lsp.buf.implementation, { desc = 'LSP go to implementation' })
-    end
-    if client.supports_method('textDocument/typeDefinition') then
-      vim.keymap.set('n', 'gt', vim.lsp.buf.type_definition, { desc = 'LSP go to type definition' })
-    end
-    if client.supports_method('textDocument/references') then
-      vim.keymap.set('n', 'gr', vim.lsp.buf.references, { desc = 'LSP find references' })
-    end
-    if client.supports_method('textDocument/hover') then
-      vim.keymap.set('n', 'K', vim.lsp.buf.hover, { desc = 'LSP hover' })
-    end
-    if client.supports_method('textDocument/rename') then
-      -- If supports, replace 'R' keymap to rename lsp function. If not, use substitution instead.
-      vim.keymap.set('n', 'R', vim.lsp.buf.rename, { desc = 'LSP rename' })
+
+    local methods = {
+      'textDocument/codeAction',
+      'textDocument/declaration',
+      'textDocument/definition',
+      'textDocument/implementation',
+      'textDocument/typeDefinition',
+      'textDocument/references',
+      'textDocument/hover',
+      'textDocument/rename',
+    }
+
+    for _, m in pairs(methods) do
+      if client.supports_method(m) then mapper.map_method(m) end
     end
 
     -- Show diagnostic window on CursorHold.
