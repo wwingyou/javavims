@@ -47,7 +47,9 @@ return {
           }),
 
           -- NOTE: The function below will be called before any actual modifications from lspkind
-          before = function (entry, vim_item)
+          before = function (_, vim_item)
+            -- Remove menu text
+            vim_item.menu = nil
             return vim_item
           end
         }

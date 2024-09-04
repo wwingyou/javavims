@@ -32,7 +32,7 @@ vim.opt.foldcolumn='2'
 
 -- Fold options.
 vim.opt.foldmethod='syntax'
--- vim.opt.foldtext='' TODO: Define custom foldtext function
+vim.opt.foldtext=''
 
 -- Line break options.
 vim.opt.wrap=true
@@ -246,3 +246,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
     vim.opt.updatetime=1000
   end
 })
+
+-- Set padding to the hover window to prevent window to occupy full screan.
+local HOVER_WINDOW_PADDING = 10
+vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
+  vim.lsp.handlers.hover, {
+    max_width = vim.o.columns - (HOVER_WINDOW_PADDING * 2)
+  }
+)
