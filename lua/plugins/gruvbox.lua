@@ -1,6 +1,13 @@
-return { 
-  "ellisonleao/gruvbox.nvim", 
-  priority = 1000, 
-  config = true, 
-  opts = {}
+return {
+  -- here is some comments.
+  "ellisonleao/gruvbox.nvim",
+  priority = 1000,
+  opts = {
+    italic = {
+      strings = true,
+      comments = true,
+      operators = true,
+      folds = false
+    },
+  }
 }
