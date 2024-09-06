@@ -31,8 +31,11 @@ vim.opt.foldcolumn='2'
 -- vim.opt.foldclose='all'
 
 -- Fold options.
-vim.opt.foldmethod='syntax'
+-- NOTE: treesitter fold expression is used instead.
+-- vim.opt.foldmethod='syntax'
 vim.opt.foldtext=''
+vim.wo.foldmethod='expr'
+vim.wo.foldexpr='v:lua.vim.treesitter.foldexpr()'
 
 -- Line break options.
 vim.opt.wrap=true
