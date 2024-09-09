@@ -8,7 +8,7 @@ require 'config.lazy'
 -- Set colorscheme 'gruvbox'
 vim.cmd 'colorscheme gruvbox'
 
--- Always indent with 2 space.
+-- Always indent with 3 space.
 vim.opt.expandtab=true
 vim.opt.tabstop=2
 vim.opt.shiftwidth=2
