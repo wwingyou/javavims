@@ -93,10 +93,11 @@ vim.keymap.set('n', '<C-+>', '<C-w>>', { desc = 'Increase current window width' 
 vim.keymap.set('n', '<C-_>', '<C-w><', { desc = 'Decrease current window width' })
 
 -- Move between windows with h, j, k, l.
-vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to left window' })
-vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to lower window' })
-vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper window' })
-vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right window' })
+-- NOTE: This keymap is unused since `vim-tmux-navigator` is used instead.
+-- vim.keymap.set('n', '<C-h>', '<C-w><C-h>', { desc = 'Move focus to left window' })
+-- vim.keymap.set('n', '<C-j>', '<C-w><C-j>', { desc = 'Move focus to lower window' })
+-- vim.keymap.set('n', '<C-k>', '<C-w><C-k>', { desc = 'Move focus to upper window' })
+-- vim.keymap.set('n', '<C-l>', '<C-w><C-l>', { desc = 'Move focus to right window' })
 
 -- Shortcut to execute external program
 vim.keymap.set('n', '!', ':!', { desc = 'Shortcut of executing external program' })
