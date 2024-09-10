@@ -9,7 +9,6 @@ return {
     'nvim-treesitter/nvim-treesitter',
     'nvim-tree/nvim-web-devicons'
   },
-  -- FIXME: Markdown icons in the informatic column has wrong background color.
   opts = {
     modes = { 'n', 'no', 'c' }, -- Change these modes
     -- to what you need
@@ -21,6 +20,20 @@ return {
         vim.wo[win].conceallevel = 2;
         vim.wo[win].concealcursor = 'c';
       end
+    },
+    highlight_groups = {
+      {
+        group_name = 'MarkviewHeading1Sign',
+        value = {
+          link = 'DiagnosticSignHint'
+        }
+      },
+      {
+        group_name = 'MarkviewHeading2Sign',
+        value = {
+          link = 'DiagnosticSignInfo'
+        }
+      }
     },
     list_items = {
       enable = true,
