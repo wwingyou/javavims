@@ -1,6 +1,7 @@
 return {
   'phaazon/hop.nvim',
   branch = 'v2', -- optional but strongly recommended
+  enabled = false,
   config = function()
     -- place this in one of your configuration file(s)
     local hop = require('hop')

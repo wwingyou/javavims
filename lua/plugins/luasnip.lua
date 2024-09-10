@@ -3,7 +3,7 @@ return {
   -- follow latest release.
   version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
   dependencies = {
-    "rafamadriz/friendly-snippets"
+    "rafamadriz/friendly-snippets",
   },
   -- install jsregexp (optional!).
   build = "make install_jsregexp",
