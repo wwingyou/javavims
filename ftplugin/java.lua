@@ -9,7 +9,7 @@ elseif #vim.fs.find({ 'mvnw' }, {}) > 0 then
 end
 
 -- Set fold level 1 by default to show root class.
-vim.bo.foldlevel=1
+vim.wo.foldlevel=1
 
 -- Map all lsp method keymaps.
 local mapper = require'utils.lsp-keymapper'
