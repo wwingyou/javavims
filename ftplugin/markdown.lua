@@ -1,2 +1,2 @@
-vim.opt.textwidth=80
-vim.opt.foldenable=false
+vim.bo.textwidth=80
+vim.bo.foldenable=false
