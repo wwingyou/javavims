@@ -258,3 +258,6 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
     max_width = vim.o.columns - (HOVER_WINDOW_PADDING * 2)
   }
 )
+
+-- Set highlight groups.
+vim.api.nvim_set_hl(0, '@markup.strong', { link = 'GruvboxPurpleBold' })

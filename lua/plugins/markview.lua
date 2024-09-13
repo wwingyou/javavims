@@ -23,17 +23,17 @@ return {
     },
     highlight_groups = {
       {
-        group_name = 'MarkviewHeading1Sign',
+        group_name = 'Heading1Sign',
         value = {
           link = 'DiagnosticSignHint'
         }
       },
       {
-        group_name = 'MarkviewHeading2Sign',
+        group_name = 'Heading2Sign',
         value = {
           link = 'DiagnosticSignInfo'
         }
-      }
+      },
     },
     list_items = {
       enable = true,
