@@ -213,6 +213,20 @@ vim.api.nvim_create_autocmd('FileType', {
   end
 })
 
+-- lemminx lsp setup.
+vim.api.nvim_create_autocmd('FileType', {
+  desc = 'lemminx (xml) setup',
+  pattern = 'xml',
+  group = vim.api.nvim_create_augroup('lsp-xml', { clear = true }),
+  callback = function(_)
+    vim.lsp.start {
+      name = 'lemminx',
+      cmd = { mason_bin_dir .. '/lemminx' },
+      capabilities = capabilites,
+    }
+  end
+})
+
 -- Set LSP keymaps when LSP is attached.
 local mapper = require'utils.lsp-keymapper'
 vim.api.nvim_create_autocmd('LspAttach', {
