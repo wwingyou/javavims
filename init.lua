@@ -174,3 +174,7 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
 
 -- Set highlight groups.
 vim.api.nvim_set_hl(0, '@markup.strong', { link = 'GruvboxPurpleBold' })
+
+-- Quickfix keymaps.
+vim.keymap.set('n', '(', '<cmd>cp<CR>zz', { desc = 'quickfix list next item' })
+vim.keymap.set('n', ')', '<cmd>cn<CR>zz', { desc = 'quickfix list prev item' })
