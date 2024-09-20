@@ -4,16 +4,20 @@ local M = {}
 --- pass this list to `map_method()` to map all methods.
 ---
 --- @see map_method
-M.all_methods = {
-  'textDocument/codeAction',
-  'textDocument/declaration',
-  'textDocument/definition',
-  'textDocument/implementation',
-  'textDocument/typeDefinition',
-  'textDocument/references',
-  'textDocument/hover',
-  'textDocument/rename',
-}
+---
+--- @return unknown methods
+function M.all_methods()
+  return {
+    'textDocument/codeAction',
+    'textDocument/declaration',
+    'textDocument/definition',
+    'textDocument/implementation',
+    'textDocument/typeDefinition',
+    'textDocument/references',
+    'textDocument/hover',
+    'textDocument/rename',
+  }
+end
 
 --- Maps LSP keymap with given method.
 ---
@@ -25,7 +29,7 @@ M.all_methods = {
 --- Example:
 ---
 --- ```lua
---- local mapper = require'utils.lsp-keymapper'
+--- local mapper = require'utils.lsp'
 --- mapper.map_method('textDocument/codeAction')
 --- ```
 ---
@@ -68,6 +72,13 @@ function M.map_methods(methods)
   for _, method in pairs(methods) do
     M.map_method(method)
   end
+end
+
+--- Get common lsp capabilites.
+---
+---@return unknown capabilites
+function M.capabilities()
+  return require('cmp_nvim_lsp').default_capabilities()
 end
 
 return M

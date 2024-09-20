@@ -78,7 +78,6 @@ vim.opt.pumheight=20
 -- Show only one status line at the bottom
 -- vim.opt.laststatus=3
 
-
 -- Enable matchit.
 vim.cmd 'packadd! matchit'
 
@@ -125,110 +124,9 @@ vim.api.nvim_create_autocmd('TextYankPost', {
   end,
 })
 
--- LSP configs with mason.
-local mason_bin_dir = vim.fn.stdpath('data') .. '/mason/bin'
-
--- Load cmp_nvim_lsp capabilities
-local capabilites = require('cmp_nvim_lsp').default_capabilities()
-
--- Lua language server for nvim configuration.
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Start lua-language-server when lua filetype is attached',
-  pattern = 'lua',
-  group = vim.api.nvim_create_augroup('lsp-lua', { clear = true }),
-  callback = function(ev)
-    vim.lsp.start {
-      name = 'lua-language-server',
-      cmd = { mason_bin_dir .. '/lua-language-server' },
-      capabilities = capabilites,
-      root_dir = vim.fs.root(ev.buf, { 'init.lua', 'init.vim' }),
-      settings = {
-        Lua = {
-          runtime = {
-            -- 'init.lua' has higher proirity so that It can load modele properly.
-            path = { '?/init.lua', '?.lua' },
-          },
-          workspace = {
-            library = {
-              -- Add vim standard library.
-              vim.env.VIMRUNTIME,
-              -- Add lazy plugin libraries,
-              vim.fn.stdpath('data') .. '/lazy',
-            }
-          }
-        }
-      }
-    }
-  end
-})
-
--- Java language server (Jdtls) setup.
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'Start jdtls server when java filetype is attached',
-  pattern = 'java',
-  group = vim.api.nvim_create_augroup('lsp-java', { clear = true }),
-  callback = function(ev)
-    local function get_data_dir()
-      local data_dir = vim.fn.stdpath('data')
-      if type(data_dir) == 'table' then data_dir = data_dir[0] end
-      if data_dir == nil then
-        data_dir = vim.env.XDG_DATA_HOME or (vim.fn.expand('~/.local/share'))
-        data_dir = data_dir .. '/nvim'
-      end
-
-      return data_dir
-    end
-
-    local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t');
-    local jar = get_data_dir() .. '/mason/share/jdtls/plugins/org.eclipse.equinox.launcher.jar'
-    local config = get_data_dir() .. '/mason/share/jdtls/config'
-    local lombok = get_data_dir() .. '/mason/share/jdtls/lombok.jar'
-    local workspace = get_data_dir() .. '/workspace/' .. project_name
-
-    require('jdtls').start_or_attach {
-      name = 'jdtls',
-      cmd = {
-        'java',
-        '-Declipse.application=org.eclipse.jdt.ls.core.id1',
-        '-Dosgi.bundles.defaultStartLevel=4',
-        '-Declipse.product=org.eclipse.jdt.ls.core.product',
-        '-Dlog.level=ALL',
-        '-javaagent:' .. lombok,
-        '-Xmx1G',
-        '--add-modules=ALL-SYSTEM',
-        '--add-opens', 'java.base/java.util=ALL-UNNAMED',
-        '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
-        '-jar', jar,
-        '-configuration', config,
-        '-data', workspace
-      },
-      capabilities = capabilites,
-      root_dir = vim.fs.root(ev.buf, { '.git', 'mvnw', 'gradlew' }),
-      settings = {
-        java = {
-          -- TODO: add settings.
-        }
-      }
-    }
-  end
-})
-
--- lemminx lsp setup.
-vim.api.nvim_create_autocmd('FileType', {
-  desc = 'lemminx (xml) setup',
-  pattern = 'xml',
-  group = vim.api.nvim_create_augroup('lsp-xml', { clear = true }),
-  callback = function(_)
-    vim.lsp.start {
-      name = 'lemminx',
-      cmd = { mason_bin_dir .. '/lemminx' },
-      capabilities = capabilites,
-    }
-  end
-})
+local lsp_utils = require'utils.lsp'
 
 -- Set LSP keymaps when LSP is attached.
-local mapper = require'utils.lsp-keymapper'
 vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
@@ -248,7 +146,7 @@ vim.api.nvim_create_autocmd('LspAttach', {
     }
 
     for _, m in pairs(methods) do
-      if client.supports_method(m) then mapper.map_method(m) end
+      if client.supports_method(m) then lsp_utils.map_method(m) end
     end
 
     -- Show diagnostic window on CursorHold.
@@ -269,7 +167,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
 local HOVER_WINDOW_PADDING = 10
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
   vim.lsp.handlers.hover, {
-    max_width = vim.o.columns - (HOVER_WINDOW_PADDING * 2)
+    max_width = vim.o.columns - (HOVER_WINDOW_PADDING * 2),
+    wrap = false,
   }
 )
 
