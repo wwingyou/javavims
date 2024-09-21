@@ -54,7 +54,18 @@ require('jdtls').start_or_attach {
   root_dir = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' }),
   settings = {
     java = {
-      -- TODO: add settings.
+      completion = {
+        enabled = true,
+        importOrder = {
+          'java',
+          'jakarta',
+          'javax',
+          'org',
+          'com',
+          'lombok',
+          'groovy'
+        }
+      }
     }
   }
 }
