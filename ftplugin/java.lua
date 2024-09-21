@@ -78,6 +78,7 @@ vim.api.nvim_create_autocmd('BufWritePre', {
   callback = function(_)
     if vim.bo.filetype == 'java' then
       require'jdtls'.organize_imports()
+      vim.cmd([[:write]])
     end
   end
 })

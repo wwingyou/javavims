@@ -176,5 +176,18 @@ vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
 vim.api.nvim_set_hl(0, '@markup.strong', { link = 'GruvboxPurpleBold' })
 
 -- Quickfix keymaps.
-vim.keymap.set('n', '(', '<cmd>cp<CR>zz', { desc = 'quickfix list next item' })
-vim.keymap.set('n', ')', '<cmd>cn<CR>zz', { desc = 'quickfix list prev item' })
+vim.keymap.set('n', '(', '<cmd>cp<CR>zOzz', { desc = 'quickfix list next item' })
+vim.keymap.set('n', ')', '<cmd>cn<CR>zOzz', { desc = 'quickfix list prev item' })
+
+vim.keymap.set('n', '<leader>qq', function()
+  -- TODO: It would be great to close quickfix list when quickfix list is already open.
+  vim.diagnostic.setqflist({ open = true })
+end, { desc = 'open lsp diagnostic quickfix list' })
+
+vim.keymap.set('n', '<leader>qe', function()
+  vim.diagnostic.setqflist({ open = true, severity = "ERROR" })
+end, { desc = 'open lsp diagnostic error list' })
+
+vim.keymap.set('n', '<leader>qw', function()
+  vim.diagnostic.setqflist({ open = true, severity = "WARN" })
+end, { desc = 'open lsp diagnostic warn list' })
