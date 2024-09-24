@@ -7,7 +7,8 @@ return {
     -- parsers manually
     -- Or if the parsers are in your $RUNTIMEPATH
     'nvim-treesitter/nvim-treesitter',
-    'nvim-tree/nvim-web-devicons'
+    'nvim-tree/nvim-web-devicons',
+    'epwalsh/obsidian.nvim',
   },
   opts = {
     modes = { 'n', 'no', 'c' }, -- Change these modes
@@ -45,5 +46,34 @@ return {
       },
       marker_dot = {}
     },
+    -- WARN: This checkbox options are obsidian.nvim dependent.
+    checkboxes = {
+      enable = true,
+      unchecked = {
+        text = '󰄱',
+        hl = 'ObsidianTodo'
+      },
+      checked = {
+        text = '',
+        hl = 'ObsidianDone'
+      },
+      custom = {
+        {
+          match = "~",
+          text = "󰰱",
+          hl = "ObsidianTilde"
+        },
+        {
+          match = ">",
+          text = "",
+          hl = "ObsidianRightArrow"
+        },
+        {
+          match = "!",
+          text = "",
+          hl = "ObsidianImportant"
+        }
+      },
+    }
   }
 }
