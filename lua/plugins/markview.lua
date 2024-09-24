@@ -15,12 +15,6 @@ return {
     hybrid_modes = { 'n' },     -- Uses this feature on
     -- normal mode
     -- This is nice to have
-    callbacks = {
-      on_enable = function (_, win)
-        vim.wo[win].conceallevel = 2;
-        vim.wo[win].concealcursor = 'c';
-      end
-    },
     highlight_groups = {
       {
         group_name = 'Heading1Sign',
@@ -50,6 +44,6 @@ return {
         text = ''
       },
       marker_dot = {}
-    }
+    },
   }
 }
