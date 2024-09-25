@@ -191,3 +191,13 @@ end, { desc = 'open lsp diagnostic error list' })
 vim.keymap.set('n', '<leader>qw', function()
   vim.diagnostic.setqflist({ open = true, severity = "WARN" })
 end, { desc = 'open lsp diagnostic warn list' })
+
+-- Toggle previous buffer
+vim.keymap.set('n', '<C-p>', function()
+  local prev_buf = vim.fn.bufnr('#')
+  if (prev_buf == -1) then
+    vim.api.nvim_err_writeln('No previous buffer.')
+    return
+  end
+  vim.api.nvim_set_current_buf(prev_buf)
+end, { desc = 'toggle buffer back and forth' })
