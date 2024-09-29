@@ -51,5 +51,7 @@ return {
     lspconfig.lemminx.setup {
       capabilities = lsp_utils.capabilities(),
     }
+
+    lspconfig.pylsp.setup {}
   end
 }

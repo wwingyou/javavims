@@ -192,7 +192,7 @@ vim.keymap.set('n', '<leader>qw', function()
   vim.diagnostic.setqflist({ open = true, severity = "WARN" })
 end, { desc = 'open lsp diagnostic warn list' })
 
--- Toggle previous buffer
+-- Toggle previous buffer.
 vim.keymap.set('n', '<C-p>', function()
   local prev_buf = vim.fn.bufnr('#')
   if (prev_buf == -1) then
