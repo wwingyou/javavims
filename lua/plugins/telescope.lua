@@ -20,5 +20,6 @@ return {
     vim.keymap.set('n', '<leader>fg', function() builtin.live_grep(default_opt) end, {})
     vim.keymap.set('n', '<leader>fb', function() builtin.buffers(default_opt) end, {})
     vim.keymap.set('n', '<leader>fh', function() builtin.help_tags(default_opt) end, {})
+    vim.keymap.set('n', '<leader>fr', function() builtin.oldfiles(default_opt) end, {})
   end
 }
