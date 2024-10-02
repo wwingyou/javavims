@@ -78,8 +78,16 @@ vim.opt.pumheight=20
 -- Show only one status line at the bottom
 -- vim.opt.laststatus=3
 
--- Use mouse support in normal mode.
-vim.opt.mouse='n'
+-- NOTE: This autocmd is for a force option updates.
+-- Bug fix for 'mouse' option is not set in normal way.
+vim.api.nvim_create_autocmd('VimEnter', {
+  desc = 'Force update options',
+  callback = function ()
+    -- Use mouse support in normal mode.
+    vim.opt.mouse='n'
+  end,
+  once = true
+})
 
 -- Enable matchit.
 vim.cmd 'packadd! matchit'
@@ -166,6 +174,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+
+
 -- Set padding to the hover window to prevent window to occupy full screan.
 local HOVER_WINDOW_PADDING = 10
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
@@ -204,3 +214,4 @@ vim.keymap.set('n', '<C-p>', function()
   end
   vim.api.nvim_set_current_buf(prev_buf)
 end, { desc = 'toggle buffer back and forth' })
+
