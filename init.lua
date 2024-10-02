@@ -78,6 +78,9 @@ vim.opt.pumheight=20
 -- Show only one status line at the bottom
 -- vim.opt.laststatus=3
 
+-- Use mouse support in normal mode.
+vim.opt.mouse='n'
+
 -- Enable matchit.
 vim.cmd 'packadd! matchit'
 
