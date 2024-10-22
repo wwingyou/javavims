@@ -53,5 +53,6 @@ return {
     }
 
     lspconfig.pylsp.setup {}
+    lspconfig.ruby_lsp.setup {}
   end
 }
