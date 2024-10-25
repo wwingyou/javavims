@@ -6,5 +6,6 @@ vim.bo.tabstop=2
 
 vim.wo.foldenable=false
 
-vim.wo.conceallevel = 2;
-vim.wo.concealcursor = 'c';
+vim.wo.conceallevel=2;
+vim.wo.concealcursor='c';
+vim.wo.signcolumn='yes:2';
