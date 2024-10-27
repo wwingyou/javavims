@@ -174,14 +174,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end
 })
 
+-- This custom hover handler removes long jdlts links
+local hover = function(_, result, ctx, config)
+  if not (result and result.contents) then
+    return vim.lsp.handlers.hover(_, result, ctx, config)
+  end
 
+  local pattern = "%[([^%]%[]+)%]%(jdt[^%)%(]+%)"
+  local repl = "**%1**"
+  if type(result.contents) == "string" then
+    local s = string.gsub(result.contents or "", pattern, repl)
+    result.contents = s
+  elseif result.contents['value'] ~= nil then
+    local s = string.gsub((result.contents or {}).value or "", pattern, repl)
+    result.contents.value = s
+  else
+    local s = string.gsub(result.contents[2] or "", pattern, repl)
+    result.contents[2] = s
+  end
+
+  return vim.lsp.handlers.hover(_, result, ctx, config)
+end
 
 -- Set padding to the hover window to prevent window to occupy full screan.
 local HOVER_WINDOW_PADDING = 10
 vim.lsp.handlers['textDocument/hover'] = vim.lsp.with(
-  vim.lsp.handlers.hover, {
+  hover, {
     max_width = vim.o.columns - (HOVER_WINDOW_PADDING * 2),
-    wrap = false,
+    wrap = true,
   }
 )
 
@@ -214,4 +234,3 @@ vim.keymap.set('n', '<C-p>', function()
   end
   vim.api.nvim_set_current_buf(prev_buf)
 end, { desc = 'toggle buffer back and forth' })
-
