@@ -31,11 +31,15 @@ local mason_share = require'mason.settings'.current.install_root_dir .. '/share'
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local jdtls_path = mason_share .. '/jdtls'
 local java_debug_path = mason_share .. '/java-debug-adapter'
+local java_test_path = mason_share .. '/java-test'
 local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher.jar'
 local config = jdtls_path .. '/config'
 local lombok = jdtls_path .. '/lombok.jar'
-local workspace = vim.fn.stdpath('cache') .. 'jdtls/workspace/' .. project_name
+local workspace = vim.fn.stdpath('cache') .. '/jdtls/workspace/' .. project_name
 local java_debug_plugin = java_debug_path .. '/com.microsoft.java.debug.plugin.jar'
+local java_test_plugins = vim.split(vim.fn.glob(java_test_path .. '/*.jar'), '\n')
+local bundles = { java_debug_plugin }
+vim.list_extend(bundles, java_test_plugins)
 
 local jdk_root = '~/.sdkman/candidates/java'
 require('jdtls').start_or_attach {
@@ -58,7 +62,7 @@ require('jdtls').start_or_attach {
   capabilities = lsp_utils.capabilities(),
   root_dir = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' }),
   init_options = {
-    bundles = { java_debug_plugin };
+    bundles = bundles
   },
   settings = {
     java = {
@@ -100,6 +104,20 @@ require('jdtls').start_or_attach {
     }
   }
 }
+
+vim.keymap.set(
+  'n',
+  '<leader>dtc',
+  function() require'jdtls'.test_class() end,
+  { desc = 'java debug testing class'}
+)
+
+vim.keymap.set(
+  'n',
+  '<leader>dtn',
+  function() require'jdtls'.test_nearest_method() end,
+  { desc = 'java debug testing nearest method'}
+)
 
 -- Organize imports before buffer write
 vim.api.nvim_create_autocmd('BufWritePre', {
