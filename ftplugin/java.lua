@@ -27,11 +27,15 @@ local function get_data_dir()
   return data_dir
 end
 
-local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t');
-local jar = get_data_dir() .. '/mason/share/jdtls/plugins/org.eclipse.equinox.launcher.jar'
-local config = get_data_dir() .. '/mason/share/jdtls/config'
-local lombok = get_data_dir() .. '/mason/share/jdtls/lombok.jar'
-local workspace = get_data_dir() .. '/workspace/' .. project_name
+local mason_share = require'mason.settings'.current.install_root_dir .. '/share'
+local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
+local jdtls_path = mason_share .. '/jdtls'
+local java_debug_path = mason_share .. '/java-debug-adapter'
+local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher.jar'
+local config = jdtls_path .. '/config'
+local lombok = jdtls_path .. '/lombok.jar'
+local workspace = vim.fn.stdpath('cache') .. 'jdtls/workspace/' .. project_name
+local java_debug_plugin = java_debug_path .. '/com.microsoft.java.debug.plugin.jar'
 
 local jdk_root = '~/.sdkman/candidates/java'
 require('jdtls').start_or_attach {
@@ -53,6 +57,9 @@ require('jdtls').start_or_attach {
   },
   capabilities = lsp_utils.capabilities(),
   root_dir = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' }),
+  init_options = {
+    bundles = { java_debug_plugin };
+  },
   settings = {
     java = {
       completion = {
