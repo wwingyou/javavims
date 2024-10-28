@@ -33,6 +33,7 @@ local config = get_data_dir() .. '/mason/share/jdtls/config'
 local lombok = get_data_dir() .. '/mason/share/jdtls/lombok.jar'
 local workspace = get_data_dir() .. '/workspace/' .. project_name
 
+local jdk_root = '~/.sdkman/candidates/java'
 require('jdtls').start_or_attach {
   name = 'jdtls',
   cmd = {
@@ -65,7 +66,30 @@ require('jdtls').start_or_attach {
           'lombok',
           'groovy'
         }
-      }
+      },
+      configuration = {
+        -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
+        -- And search for `interface RuntimeOption`
+        -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
+        runtimes = {
+          {
+            name = 'JavaSE-11',
+            path = vim.fn.expand(jdk_root .. '/11.*-tem/'),
+          },
+          {
+            name = 'JavaSE-17',
+            path = vim.fn.expand(jdk_root .. '/17.*-tem/'),
+          },
+          {
+            name = 'JavaSE-21',
+            path = vim.fn.expand(jdk_root .. '/21.*-tem/'),
+          },
+          {
+            name = 'JavaSE-23',
+            path = vim.fn.expand(jdk_root .. '/23.*-tem/'),
+          },
+        }
+      },
     }
   }
 }
