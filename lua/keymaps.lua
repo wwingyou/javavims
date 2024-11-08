@@ -59,3 +59,25 @@ vim.keymap.set('n', '<C-p>', function()
   vim.api.nvim_set_current_buf(prev_buf)
 end, { desc = 'toggle buffer back and forth' })
 
+vim.keymap.set('n', '<CR>', function()
+  if vim.bo.buftype == '' then
+    return 'o<ESC>'
+  else
+    return '<CR>'
+  end
+end, { expr = true, desc = 'add empty line'})
+
+vim.keymap.set('n', '<BS>', function()
+  if vim.bo.buftype == '' then
+    local current_line, _ = unpack(vim.api.nvim_win_get_cursor(0))  -- Get current line (1-based index)
+    local last_line = vim.api.nvim_buf_line_count(0)  -- Get the total number of lines in the buffer
+
+    if current_line == last_line then
+      return 'dd'
+    else
+      return 'ddk'
+    end
+  else
+    return '<BS>'
+  end
+end, { expr = true, desc = 'delete a line'})
