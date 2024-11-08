@@ -54,5 +54,8 @@ return {
 
     lspconfig.pylsp.setup {}
     lspconfig.ruby_lsp.setup {}
+    lspconfig.ts_ls.setup {
+      capabilities = lsp_utils.capabilities(),
+    }
   end
 }
