@@ -2,7 +2,7 @@ return {
   'mfussenegger/nvim-dap',
   keys = {
     {
-      '<CR>',
+      '<C-B>',
       function() require'dap'.toggle_breakpoint() end,
       mode = 'n',
       desc = '[DEBUG] toggle breakpoints',
