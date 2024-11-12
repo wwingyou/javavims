@@ -21,6 +21,7 @@ return {
           -- the default case_mode is "smart_case"
         }
       },
+      file_ignore_patterns = { "%.class" }
     }
     require'telescope'.setup { defaults = default_opt }
 
