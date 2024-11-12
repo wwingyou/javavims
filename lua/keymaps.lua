@@ -81,3 +81,6 @@ vim.keymap.set('n', '<BS>', function()
     return '<BS>'
   end
 end, { expr = true, desc = 'delete a line'})
+
+vim.keymap.set('v', '<', '<gv', { noremap = true, desc = 're-select indent area'})
+vim.keymap.set('v', '>', '>gv', { noremap = true, desc = 're-select indent area'})
