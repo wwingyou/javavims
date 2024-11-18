@@ -107,14 +107,14 @@ require('jdtls').start_or_attach {
 
 vim.keymap.set(
   'n',
-  '<leader>dtc',
+  '<leader>df',
   function() require'jdtls'.test_class() end,
   { desc = 'java debug testing class'}
 )
 
 vim.keymap.set(
   'n',
-  '<leader>dtn',
+  '<leader>dn',
   function() require'jdtls'.test_nearest_method() end,
   { desc = 'java debug testing nearest method'}
 )
