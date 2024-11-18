@@ -12,7 +12,7 @@ vim.opt.autowrite=true
 -- Show informatic extra columns.
 vim.opt.number=true
 vim.opt.relativenumber=true
-vim.opt.foldcolumn='2'
+-- vim.opt.foldcolumn='2'
 
 -- NOTE: This options makes it automatically opens and closes current cursor
 -- position. It's pretty fun but very confusing as for daily option.
