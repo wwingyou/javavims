@@ -1,3 +1,5 @@
+local window_utils = require'utils/window'
+
 -- Set nohlsearch on pressing <ESC>.
 vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
 
@@ -37,8 +39,11 @@ vim.keymap.set('n', '(', '<cmd>cp<CR>zOzz', { desc = 'quickfix list next item' }
 vim.keymap.set('n', ')', '<cmd>cn<CR>zOzz', { desc = 'quickfix list prev item' })
 
 vim.keymap.set('n', '<leader>qq', function()
-  -- TODO: It would be great to close quickfix list when quickfix list is already open.
-  vim.diagnostic.setqflist({ open = true })
+  if window_utils.is_quickfix_open() then
+    vim.cmd([[cclose]])
+  else
+    vim.cmd([[copen]])
+  end
 end, { desc = 'open lsp diagnostic quickfix list' })
 
 vim.keymap.set('n', '<leader>qe', function()
