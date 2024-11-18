@@ -1,4 +1,4 @@
-local window_utils = require'utils/window'
+local qf = require'utils/quickfix'
 
 -- Set nohlsearch on pressing <ESC>.
 vim.keymap.set('n', '<ESC>', '<cmd>nohlsearch<CR>')
@@ -35,11 +35,31 @@ vim.keymap.set('n', '<leader>1', '<cmd>split term://$SHELL<CR>', { desc = 'Open 
 vim.keymap.set('t', '<ESC>', '<C-\\><C-N>', { desc = 'Close terminal' })
 
 -- Quickfix keymaps.
-vim.keymap.set('n', '(', '<cmd>cp<CR>zOzz', { desc = 'quickfix list next item' })
-vim.keymap.set('n', ')', '<cmd>cn<CR>zOzz', { desc = 'quickfix list prev item' })
+vim.keymap.set(
+  'n', '(',
+  function()
+    if qf.index() == 1 then
+      return '<cmd>cc<CR>zOzz'
+    else
+      return '<cmd>cp<CR>zOzz'
+    end
+  end,
+  { expr = true, desc = 'quickfix list next item' }
+)
+vim.keymap.set(
+  'n', ')',
+  function()
+    if qf.index() == qf.size() then
+      return '<cmd>cc<CR>zOzz'
+    else
+      return '<cmd>cn<CR>zOzz'
+    end
+  end,
+  { expr = true, desc = 'quickfix list prev item' }
+)
 
 vim.keymap.set('n', '<leader>qq', function()
-  if window_utils.is_quickfix_open() then
+  if qf.is_window_open() then
     vim.cmd([[cclose]])
   else
     vim.cmd([[copen]])
