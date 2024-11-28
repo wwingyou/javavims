@@ -3,11 +3,15 @@ return {
   dependencies = {
     'williamboman/mason-lspconfig.nvim',
     'neovim/nvim-lspconfig',
+    'jay-babu/mason-nvim-dap.nvim',
   },
   config = function()
     require'mason'.setup {}
     require'mason-lspconfig'.setup {
       ensure_installed = { 'lua_ls', 'jdtls', 'lemminx' }
+    }
+    require'mason-nvim-dap'.setup {
+      ensure_installed = { 'js' }
     }
     local lspconfig = require'lspconfig'
     local lsp_utils = require'utils.lsp'
@@ -57,5 +61,11 @@ return {
     lspconfig.ts_ls.setup {
       capabilities = lsp_utils.capabilities(),
     }
+    lspconfig.gradle_ls.setup {
+      filetypes = {
+        "groovy", "kotlin"
+      }
+    }
+    lspconfig.clangd.setup {}
   end
 }
