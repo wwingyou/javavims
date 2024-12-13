@@ -7,6 +7,6 @@ return {
       use_default_keymaps = false
     }
 
-    vim.keymap.set('n', 'gj', require'treesj'.toggle, { desc = 'Toggle treesj' })
+    vim.keymap.set('n', 'gj', require'treesj'.toggle, { desc = '[Edit] toggle treesj' })
   end,
 }

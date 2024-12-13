@@ -26,6 +26,7 @@ return {
         { name = 'nvim_lsp' },
         { name = 'luasnip' },
         { name = 'buffer' },
+        { name = 'lazydev', group_index = 0 }
       },
       window = {
         completion = {

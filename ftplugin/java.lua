@@ -51,7 +51,7 @@ require('jdtls').start_or_attach {
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.level=ALL',
     '-javaagent:' .. lombok,
-    '-Xmx1G',
+    '-Xmx4G',
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
@@ -105,19 +105,19 @@ require('jdtls').start_or_attach {
   }
 }
 
-vim.keymap.set(
-  'n',
-  '<leader>df',
-  function() require'jdtls'.test_class() end,
-  { desc = 'java debug testing class'}
-)
-
-vim.keymap.set(
-  'n',
-  '<leader>dn',
-  function() require'jdtls'.test_nearest_method() end,
-  { desc = 'java debug testing nearest method'}
-)
+-- vim.keymap.set(
+--   'n',
+--   '<leader>df',
+--   function() require'jdtls'.test_class() end,
+--   { desc = 'java debug testing class'}
+-- )
+--
+-- vim.keymap.set(
+--   'n',
+--   '<leader>dn',
+--   function() require'jdtls'.test_nearest_method() end,
+--   { desc = 'java debug testing nearest method'}
+-- )
 
 -- Organize imports before buffer write
 vim.api.nvim_create_autocmd('BufWritePre', {
@@ -131,4 +131,13 @@ vim.api.nvim_create_autocmd('BufWritePre', {
     end
   end
 })
+--
+-- require'dap'.configurations.java = {
+--   {
+--     console = 'externalTerminal',
+--     request = 'launch',
+--     type = 'java',
+--   }
+-- }
 
+vim.keymap.set('n', '<C-R>', '<cmd>VimuxRunCommand "./gradlew bootRun"<CR>', { desc = "[Run] spring boot project on tmux pane" })

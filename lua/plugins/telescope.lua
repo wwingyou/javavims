@@ -8,10 +8,14 @@ return {
     'nvim-telescope/telescope-ui-select.nvim',
   },
   config = function()
-    local default_opt = {
-      layout_strategy = 'vertical',
-      layout_config = {
-        vertical = { preview_height = 0.75 }
+    require'telescope'.setup {
+      defaults = {
+        layout_strategy = 'vertical',
+        layout_config = {
+          vertical = { preview_height = 0.75 }
+        },
+        -- file_sorter =  require'telescope.sorters'.get_fzy_sorter,
+        -- generic_sorter =  require'telescope.sorters'.get_fzy_sorter,
       },
       extensions = {
         fzf = {
@@ -20,13 +24,7 @@ return {
           override_file_sorter = true,     -- override the file sorter
           case_mode = "smart_case",        -- or "ignore_case" or "respect_case"
           -- the default case_mode is "smart_case"
-        }
-      },
-      file_ignore_patterns = { "%.class" }
-    }
-    require'telescope'.setup {
-      defaults = default_opt,
-      extensions = {
+        },
         ["ui-select"] = {
           require("telescope.themes").get_dropdown {
             -- even more opts
@@ -46,15 +44,17 @@ return {
           --   codeactions = false,
           -- }
         }
-      }
+      },
+      -- file_ignore_patterns = { "%.class" }
     }
     require'telescope'.load_extension('ui-select')
+    require'telescope'.load_extension('fzf')
 
     local builtin = require('telescope.builtin')
-    vim.keymap.set('n', '<leader>ff', function() builtin.find_files(default_opt) end, {})
-    vim.keymap.set('n', '<leader>fg', function() builtin.live_grep(default_opt) end, {})
-    vim.keymap.set('n', '<leader>fb', function() builtin.buffers(default_opt) end, {})
-    vim.keymap.set('n', '<leader>fh', function() builtin.help_tags(default_opt) end, {})
-    vim.keymap.set('n', '<leader>fr', function() builtin.oldfiles(default_opt) end, {})
+    vim.keymap.set('n', '<leader>ff', function() builtin.find_files() end, { desc = '[Telescope] find files' })
+    vim.keymap.set('n', '<leader>fg', function() builtin.live_grep() end, { desc = '[Telescope] live grep' })
+    vim.keymap.set('n', '<leader>fb', function() builtin.buffers() end, { desc = '[Telescope] buffers' })
+    vim.keymap.set('n', '<leader>fh', function() builtin.help_tags() end, { desc = '[Telescope] help tags' })
+    vim.keymap.set('n', '<leader>fr', function() builtin.oldfiles() end, { desc = '[Telescope] old files' })
   end
 }

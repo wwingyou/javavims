@@ -4,10 +4,10 @@ return {
   lazy = true,
   ft = 'markdown',
   keys = {
-    { '<leader>fn', '<cmd>ObsidianSearch<CR>', mode = 'n', desc = 'search obsidian' },
-    { '<leader>cc', '<cmd>ObsidianNew<CR>', mode = 'n', desc = 'create obsidian capture note' },
-    { '<leader>ct', '<cmd>ObsidianToday<CR>', mode = 'n', desc = 'create obsidian today note' },
-    { 'gf', '<cmd>ObsidianFollowLink<CR>', mode = 'n', desc = 'obsidian follow link' },
+    { '<leader>fn', '<cmd>ObsidianSearch<CR>', mode = 'n', desc = '[Obsidian] search notes' },
+    { '<leader>cc', '<cmd>ObsidianNew<CR>', mode = 'n', desc = '[Obsidan] create obsidian capture note' },
+    { '<leader>ct', '<cmd>ObsidianToday<CR>', mode = 'n', desc = '[Obsidan] create obsidian today note' },
+    { 'gf', '<cmd>ObsidianFollowLink<CR>', mode = 'n', desc = '[Obsidan] obsidian follow link' },
   },
   -- Replace the above line with this if you only want to load obsidian.nvim for markdown files in your vault:
   -- event = {

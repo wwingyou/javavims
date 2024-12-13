@@ -1,7 +1,7 @@
 return {
   "m4xshen/hardtime.nvim",
+  enabled = false,
   dependencies = { "MunifTanjim/nui.nvim", "nvim-lua/plenary.nvim" },
-  opts = {},
   config = function(opt)
     local default_config = require'hardtime.config'.config
     vim.tbl_extend('force', default_config, opt)

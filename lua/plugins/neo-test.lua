@@ -26,19 +26,19 @@ return {
         '<leader>rf',
         function() require'neotest'.run.run(vim.fn.expand('%')) end,
         mode = 'n',
-        desc = 'run test file',
+        desc = '[Test] run file',
       },
       {
         '<leader>rt',
         function() require'neotest'.run.run() end,
         mode = 'n',
-        desc = 'run test file',
+        desc = '[Test] run nearest test',
       },
       {
         '<leader>dt',
         function() require'neotest'.run.run({ strategy = 'dap' }) end,
         mode = 'n',
-        desc = 'run test file',
+        desc = '[Debug] run file',
       },
       {
         '<leader>df',
@@ -46,7 +46,7 @@ return {
           require'neotest'.run.run({ vim.fn.expand('%'), strategy = 'dap' })
         end,
         mode = 'n',
-        desc = 'run test file',
+        desc = '[Debug] run nearest test',
       }
     },
     config = function()

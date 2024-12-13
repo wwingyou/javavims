@@ -8,6 +8,7 @@ require 'options'
 require 'highlights'
 require 'keymaps'
 require 'autocmds'
+require 'usercmds'
 
 -- Set colorscheme 'gruvbox'
 vim.cmd 'colorscheme gruvbox'

@@ -44,7 +44,7 @@ vim.keymap.set(
       return '<cmd>cp<CR>zOzz'
     end
   end,
-  { expr = true, desc = 'quickfix list next item' }
+  { expr = true, desc = '[Quickfix] next item' }
 )
 vim.keymap.set(
   'n', ')',
@@ -55,7 +55,7 @@ vim.keymap.set(
       return '<cmd>cn<CR>zOzz'
     end
   end,
-  { expr = true, desc = 'quickfix list prev item' }
+  { expr = true, desc = '[Quickfix] prev item' }
 )
 
 vim.keymap.set('n', '<leader>qq', function()
@@ -64,15 +64,15 @@ vim.keymap.set('n', '<leader>qq', function()
   else
     vim.cmd([[copen]])
   end
-end, { desc = 'open lsp diagnostic quickfix list' })
+end, { desc = '[Quickfix] toggle list' })
 
 vim.keymap.set('n', '<leader>qe', function()
   vim.diagnostic.setqflist({ open = true, severity = "ERROR" })
-end, { desc = 'open lsp diagnostic error list' })
+end, { desc = '[Quickfix] open error list' })
 
 vim.keymap.set('n', '<leader>qw', function()
   vim.diagnostic.setqflist({ open = true, severity = "WARN" })
-end, { desc = 'open lsp diagnostic warn list' })
+end, { desc = '[Quickfix] open warnning list' })
 
 -- Toggle previous buffer.
 vim.keymap.set('n', '<C-p>', function()
@@ -82,7 +82,7 @@ vim.keymap.set('n', '<C-p>', function()
     return
   end
   vim.api.nvim_set_current_buf(prev_buf)
-end, { desc = 'toggle buffer back and forth' })
+end, { desc = 'Toggle buffer back and forth' })
 
 vim.keymap.set('n', '<CR>', function()
   if vim.bo.buftype == '' then
@@ -90,22 +90,22 @@ vim.keymap.set('n', '<CR>', function()
   else
     return '<CR>'
   end
-end, { expr = true, desc = 'add empty line'})
+end, { expr = true, desc = 'Add empty line'})
 
-vim.keymap.set('n', '<BS>', function()
-  if vim.bo.buftype == '' then
-    local current_line, _ = unpack(vim.api.nvim_win_get_cursor(0))  -- Get current line (1-based index)
-    local last_line = vim.api.nvim_buf_line_count(0)  -- Get the total number of lines in the buffer
+-- vim.keymap.set('n', '<BS>', function()
+--   if vim.bo.buftype == '' then
+--     local current_line, _ = unpack(vim.api.nvim_win_get_cursor(0))  -- Get current line (1-based index)
+--     local last_line = vim.api.nvim_buf_line_count(0)  -- Get the total number of lines in the buffer
+--
+--     if current_line == last_line then
+--       return 'dd'
+--     else
+--       return 'ddk'
+--     end
+--   else
+--     return '<BS>'
+--   end
+-- end, { expr = true, desc = 'delete a line'})
 
-    if current_line == last_line then
-      return 'dd'
-    else
-      return 'ddk'
-    end
-  else
-    return '<BS>'
-  end
-end, { expr = true, desc = 'delete a line'})
-
-vim.keymap.set('v', '<', '<gv', { noremap = true, desc = 're-select indent area'})
-vim.keymap.set('v', '>', '>gv', { noremap = true, desc = 're-select indent area'})
+vim.keymap.set('v', '<', '<gv', { noremap = true, desc = 'Re-select indent area'})
+vim.keymap.set('v', '>', '>gv', { noremap = true, desc = 'Re-select indent area'})
