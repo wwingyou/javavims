@@ -1,4 +1,6 @@
 vim.keymap.set('n', '<C-R>', function()
+  -- Save current file first
+  vim.cmd([[w]])
   local file_path = vim.api.nvim_buf_get_name(0)
   local file_name = vim.fn.fnamemodify(file_path, ":t")
 
