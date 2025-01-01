@@ -14,6 +14,7 @@ return {
         layout_config = {
           vertical = { preview_height = 0.75 }
         },
+        file_ignore_patterns = { 'bin/', '%.class' },
         -- file_sorter =  require'telescope.sorters'.get_fzy_sorter,
         -- generic_sorter =  require'telescope.sorters'.get_fzy_sorter,
       },
