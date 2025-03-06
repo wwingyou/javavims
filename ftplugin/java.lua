@@ -29,11 +29,13 @@ end
 
 local mason_share = require'mason.settings'.current.install_root_dir .. '/share'
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
-local jdtls_path = mason_share .. '/jdtls'
+-- local jdtls_path = mason_share .. '/jdtls'
+-- NOTE: Use jdtls 1.39.0
+local jdtls_path = vim.fn.stdpath('config') .. '/lsp/jdtls'
 local java_debug_path = mason_share .. '/java-debug-adapter'
 local java_test_path = mason_share .. '/java-test'
-local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher.jar'
-local config = jdtls_path .. '/config'
+local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar'
+local config = jdtls_path .. '/config_mac_arm'
 local lombok = jdtls_path .. '/lombok.jar'
 local workspace = vim.fn.stdpath('cache') .. '/jdtls/workspace/' .. project_name
 local java_debug_plugin = java_debug_path .. '/com.microsoft.java.debug.plugin.jar'

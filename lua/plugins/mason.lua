@@ -8,7 +8,7 @@ return {
   config = function()
     require'mason'.setup {}
     require'mason-lspconfig'.setup {
-      ensure_installed = { 'lua_ls', 'jdtls', 'lemminx' }
+      ensure_installed = { 'lua_ls', 'jdtls', 'lemminx', 'gopls' }
     }
     require'mason-nvim-dap'.setup {
       ensure_installed = { 'js' }
@@ -67,5 +67,8 @@ return {
       }
     }
     lspconfig.clangd.setup {}
+    lspconfig.gopls.setup {
+      capabilities = lsp_utils.capabilities()
+    }
   end
 }
