@@ -9,7 +9,7 @@
   "dashboard-nvim": { "branch": "master", "commit": "000448d837f6e7a47f8f342f29526c4d7e49e9ce" },
   "dressing.nvim": { "branch": "master", "commit": "2d7c2db2507fa3c4956142ee607431ddb2828639" },
   "friendly-snippets": { "branch": "main", "commit": "efff286dd74c22f731cdec26a70b46e5b203c619" },
-  "fzf-lua": { "branch": "main", "commit": "54005a680b8115a3596c845c6e448299601c09eb" },
+  "fzf-lua": { "branch": "main", "commit": "aeff8132009a7fc55c6c43bca4288d5ba26a5393" },
   "gruvbox.nvim": { "branch": "main", "commit": "15958f5ee43e144856cd2084ce6c571bfdb44504" },
   "hardtime.nvim": { "branch": "main", "commit": "027d6f991927a71bd510a7673ae5bb404ca2a1c7" },
   "hererocks": { "branch": "master", "commit": "c9c5444dea1e07e005484014a8231aa667be30b6" },

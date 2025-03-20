@@ -3,13 +3,13 @@ return {
     dependencies = {
         "nvim-lua/plenary.nvim",  -- Required for Job and HTTP requests
     },
-    cmd = "MCPHub", -- lazily start the hub when `MCPHub` is called
+    -- cmd = "MCPHub", -- lazily start the hub when `MCPHub` is called
     build = "npm install -g mcp-hub@latest", -- Installs required mcp-hub npm module
     config = function()
         require("mcphub").setup({
             -- Required options
             port = 3000,  -- Port for MCP Hub server
-            config = vim.fn.expand("~/mcpservers.json"),  -- Absolute path to config file
+            config = vim.fn.expand("~/.config/nvim/mcpservers.json"),  -- Absolute path to config file
 
             -- Optional options
             on_ready = function(hub)
