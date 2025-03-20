@@ -1,5 +1,8 @@
 return {
   'wwingyou/telescope_docker',
+  dependencies = {
+    'nvim-telescope/telescope.nvim',
+  },
   config = function ()
     local docker = require'telescope-docker'
     vim.keymap.set('n', '<leader>oi', docker.view_docker_images, { desc = 'Docker Show Images'})
