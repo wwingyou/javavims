@@ -36,7 +36,7 @@ end
 ---@param method string
 function M.map_method(method)
     if method == 'textDocument/codeAction' then
-      vim.keymap.set({'n', 'v'}, '<leader>a', vim.lsp.buf.code_action, { desc = '[LSP] code action' })
+      vim.keymap.set({'n', 'v'}, '<leader>e', vim.lsp.buf.code_action, { desc = '[LSP] code action' })
     elseif method == 'textDocument/declaration' then
       vim.keymap.set('n', 'gD', vim.lsp.buf.declaration, { desc = '[LSP] go to declaration' })
     elseif method == 'textDocument/definition' then
