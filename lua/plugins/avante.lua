@@ -1,6 +1,6 @@
 return {
   -- "yetone/avante.nvim",
-  dir = "/Users/dogchew/Projects/ml/avante.nvim",
+  dir = "/Users/dogchew/workspace/ml/avante.nvim",
   event = "VeryLazy",
   version = false, -- Never set this value to "*"! Never!
   opts = {
