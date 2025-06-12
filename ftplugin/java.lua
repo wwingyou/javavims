@@ -37,6 +37,7 @@ local java_test_path = mason_share .. '/java-test'
 local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar'
 local config = jdtls_path .. '/config_mac_arm'
 local lombok = jdtls_path .. '/lombok.jar'
+local aspectj = jdtls_path .. '/aspectjweaver-1.9.23.jar'
 local workspace = vim.fn.stdpath('cache') .. '/jdtls/workspace/' .. project_name
 local java_debug_plugin = java_debug_path .. '/com.microsoft.java.debug.plugin.jar'
 local java_test_plugins = vim.split(vim.fn.glob(java_test_path .. '/*.jar'), '\n')
@@ -53,6 +54,7 @@ require('jdtls').start_or_attach {
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
     '-Dlog.level=ALL',
     '-javaagent:' .. lombok,
+    '-javaagent:' .. aspectj,
     '-Xmx4G',
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
@@ -122,17 +124,18 @@ require('jdtls').start_or_attach {
 -- )
 
 -- Organize imports before buffer write
-vim.api.nvim_create_autocmd('BufWritePre', {
-  desc = 'Organize imports before buffer write',
-  pattern = '*.java',
-  group = vim.api.nvim_create_augroup('bufwrite-java', { clear = true }),
-  callback = function(_)
-    if vim.bo.filetype == 'java' then
-      require'jdtls'.organize_imports()
-      vim.cmd([[:write]])
-    end
-  end
-})
+-- NOTE: Commented out to resolve LSP error
+-- vim.api.nvim_create_autocmd('BufWritePre', {
+--   desc = 'Organize imports before buffer write',
+--   pattern = '*.java',
+--   group = vim.api.nvim_create_augroup('bufwrite-java', { clear = true }),
+--   callback = function(_)
+--     if vim.bo.filetype == 'java' then
+--       require'jdtls'.organize_imports()
+--       vim.cmd([[:write]])
+--     end
+--   end
+-- })
 --
 -- require'dap'.configurations.java = {
 --   {
@@ -142,4 +145,4 @@ vim.api.nvim_create_autocmd('BufWritePre', {
 --   }
 -- }
 
-vim.keymap.set('n', '<C-R>', '<cmd>VimuxRunCommand "./gradlew bootRun"<CR>', { desc = "[Run] spring boot project on tmux pane" })
+-- vim.keymap.set('n', '<C-R>', '<cmd>VimuxRunCommand "./gradlew bootRun"<CR>', { desc = "[Run] spring boot project on tmux pane" })

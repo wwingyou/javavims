@@ -1,5 +1,37 @@
 {
   "mcpServers": {
-
+    "filesystem": {
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/dogchew/workspace"
+      ],
+      "disabled_tools": [
+        
+      ],
+      "custom_instructions": {
+        "disabled": true
+      },
+      "command": "npx",
+      "disabled": false
+    },
+    "sequential-thinking": {
+      "disabled": false,
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-sequential-thinking"
+      ],
+      "command": "npx",
+      "custom_instructions": {
+        "disabled": false
+      }
+    }
+  },
+  "nativeMCPServers": {
+    "mcphub": {
+      "autoApprove": [
+        
+      ]
+    }
   }
 }
