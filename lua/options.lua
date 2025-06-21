@@ -78,3 +78,8 @@ vim.api.nvim_create_autocmd('VimEnter', {
   end,
   once = true
 })
+
+-- Switch.vim global definitions
+vim.g.switch_definitions = {
+  -- { 'a', 'b', 'c' },
+};
