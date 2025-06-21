@@ -11,7 +11,7 @@ return {
       ensure_installed = { 'lua_ls', 'jdtls', 'lemminx', 'gopls' }
     }
     require'mason-nvim-dap'.setup {
-      ensure_installed = { 'js' }
+      ensure_installed = { 'js', 'java', 'java-test' }
     }
     local lspconfig = require'lspconfig'
     local lsp_utils = require'utils.lsp'
