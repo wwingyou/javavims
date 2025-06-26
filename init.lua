@@ -14,4 +14,4 @@ require 'usercmds'
 vim.cmd 'colorscheme tokyonight-moon'
 
 -- Enable matchit.
-vim.cmd 'packadd! matchit'
+-- vim.cmd 'packadd! matchit'

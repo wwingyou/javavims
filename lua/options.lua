@@ -21,11 +21,11 @@ vim.opt.relativenumber=true
 -- vim.opt.foldclose='all'
 
 -- Fold options.
--- NOTE: treesitter fold expression is used instead.
--- vim.opt.foldmethod='syntax'
+-- NOTE: Folding is disabled by default.
 vim.opt.foldtext=''
 vim.wo.foldmethod='expr'
 vim.wo.foldexpr='v:lua.vim.treesitter.foldexpr()'
+vim.wo.foldlevel=999
 
 -- Line break options.
 vim.opt.wrap=true

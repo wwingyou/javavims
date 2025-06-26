@@ -8,9 +8,6 @@ elseif #vim.fs.find({ 'mvnw' }, {}) > 0 then
   vim.bo.makeprg='./mvnw compile'
 end
 
--- Set fold level 1 by default to show root class.
-vim.wo.foldlevel=1
-
 -- Map all lsp method keymaps.
 local lsp_utils = require'utils.lsp'
 lsp_utils.map_methods(lsp_utils.all_methods())
@@ -27,17 +24,17 @@ local function get_data_dir()
   return data_dir
 end
 
-local mason_share = require'mason.settings'.current.install_root_dir .. '/share'
+local mason_root = require'mason.settings'.current.install_root_dir .. '/share'
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
--- local jdtls_path = mason_share .. '/jdtls'
+local jdtls_path = mason_root .. '/jdtls'
 -- NOTE: Use jdtls 1.39.0
-local jdtls_path = vim.fn.stdpath('config') .. '/lsp/jdtls'
-local java_debug_path = mason_share .. '/java-debug-adapter'
-local java_test_path = mason_share .. '/java-test'
-local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher_1.6.900.v20240613-2009.jar'
-local config = jdtls_path .. '/config_mac_arm'
+-- local jdtls_path = vim.fn.stdpath('config') .. '/lsp/jdtls'
+local java_debug_path = mason_root .. '/java-debug-adapter'
+local java_test_path = mason_root .. '/java-test'
+local jar = jdtls_path .. '/plugins/org.eclipse.equinox.launcher.jar'
+local config = jdtls_path .. '/config'
 local lombok = jdtls_path .. '/lombok.jar'
-local aspectj = jdtls_path .. '/aspectjweaver-1.9.23.jar'
+-- local aspectj = jdtls_path .. '/aspectjweaver-1.9.23.jar'
 local workspace = vim.fn.stdpath('cache') .. '/jdtls/workspace/' .. project_name
 local java_debug_plugin = java_debug_path .. '/com.microsoft.java.debug.plugin.jar'
 local java_test_plugins = vim.split(vim.fn.glob(java_test_path .. '/*.jar'), '\n')
@@ -52,10 +49,11 @@ require('jdtls').start_or_attach {
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
+    '-Dlog.protocol=true',
     '-Dlog.level=ALL',
     '-javaagent:' .. lombok,
-    '-javaagent:' .. aspectj,
-    '-Xmx4G',
+    -- '-javaagent:' .. aspectj,
+    '-Xmx1g',
     '--add-modules=ALL-SYSTEM',
     '--add-opens', 'java.base/java.util=ALL-UNNAMED',
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
