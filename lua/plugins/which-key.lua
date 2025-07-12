@@ -24,6 +24,8 @@ return {
       { '<leader>d', group = 'Debug' },
       { '<leader>q', group = 'Quickfix' },
       { '<leader>r', group = 'Run' },
+      { '<leader>n', group = 'Navigation' },
+      { '<leader>nv', '<cmd>Navbuddy<cr>', desc = 'Open Navbuddy' },
     })
   end
 }

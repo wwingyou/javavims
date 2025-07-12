@@ -42,7 +42,7 @@ local bundles = { java_debug_plugin }
 vim.list_extend(bundles, java_test_plugins)
 
 local jdk_root = '~/.sdkman/candidates/java'
-require('jdtls').start_or_attach {
+local client_id = require('jdtls').start_or_attach {
   name = 'jdtls',
   cmd = {
     'java',
@@ -106,6 +106,57 @@ require('jdtls').start_or_attach {
     }
   }
 }
+
+-- Add event handler for when JDTLS is fully initialized
+vim.api.nvim_create_autocmd('LspAttach', {
+  desc = 'JDTLS initialization event handler',
+  pattern = '*.java',
+  group = vim.api.nvim_create_augroup('jdtls-init', { clear = true }),
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    if client and client.name == 'jdtls' then
+      print("=== JDTLS INITIALIZATION ===")
+      print(string.format("✓ JDTLS fully initialized for buffer %d", args.buf))
+      print(string.format("✓ Client ID: %d", client.id))
+      print(string.format("✓ File: %s", vim.api.nvim_buf_get_name(args.buf)))
+      print(string.format("✓ Root directory: %s", client.config.root_dir or "Unknown"))
+      print(string.format("✓ Server capabilities loaded: %s", 
+        client.server_capabilities and "Yes" or "No"))
+      
+      -- Attach navic for breadcrumbs
+      local navic = require'nvim-navic'
+      local bufnr = args.buf
+
+      if navic then
+        local buf_name = vim.api.nvim_buf_get_name(bufnr)
+        local buf_filetype = vim.bo[bufnr].filetype
+        
+        -- Print detailed navic attachment information
+        print("=== NAVIC ATTACHMENT INFO ===")
+        print(string.format("✓ Navic attached to buffer %d", bufnr))
+        print(string.format("✓ File: %s", buf_name))
+        print(string.format("✓ Filetype: %s", buf_filetype))
+        print(string.format("✓ LSP Client: %s (ID: %d)", client.name, client.id))
+        print(string.format("✓ Document symbols supported: %s", 
+          client.server_capabilities.documentSymbolProvider and "Yes" or "No"))
+        
+        navic.attach(client, bufnr)
+        vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+      end
+      
+      -- Attach navbuddy for symbol navigation
+      local navbuddy = require'nvim-navbuddy'
+      if navbuddy then
+        print("✓ Navbuddy attached to JDTLS client")
+        navbuddy.attach(client, bufnr)
+      end
+      
+      print("============================")
+    end
+  end
+})
+
+vim.keymap.set('n', '<leader>oi', function() require'jdtls'.organize_imports() end, { desc = '[JDTLS] Organize imports'})
 
 -- vim.keymap.set(
 --   'n',
