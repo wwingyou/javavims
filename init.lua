@@ -11,7 +11,7 @@ require 'autocmds'
 require 'usercmds'
 
 -- Set colorscheme 'gruvbox'
-vim.cmd 'colorscheme tokyonight-moon'
+vim.cmd 'colorscheme catppuccin'
 
 -- Enable matchit.
 -- vim.cmd 'packadd! matchit'

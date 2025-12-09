@@ -1,5 +1,6 @@
 {
   "FixCursorHold.nvim": { "branch": "master", "commit": "1900f89dc17c603eec29960f57c00bd9ae696495" },
+<<<<<<< HEAD
   "LuaSnip": { "branch": "master", "commit": "5a1e39223db9a0498024a77b8441169d260c8c25" },
   "avante.nvim": { "branch": "main", "commit": "d3ec7c7320151244f07252a73628b1417f694b06" },
   "catppuccin": { "branch": "main", "commit": "193e123cdbc4dd3e86db883d55349e9587f0ded6" },

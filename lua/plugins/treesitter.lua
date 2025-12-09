@@ -15,7 +15,6 @@ return {
         'javascript',
         'typescript',
         'html',
-        'latex',
       },
       ignore_install = {},
       auto_install = true,
