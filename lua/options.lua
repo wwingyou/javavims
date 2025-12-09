@@ -83,3 +83,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
 vim.g.switch_definitions = {
   -- { 'a', 'b', 'c' },
 };
+
+-- Reduce updatetime to open up diagnostic faster
+vim.opt.updatetime=1000

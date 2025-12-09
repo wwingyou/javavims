@@ -12,18 +12,6 @@ end
 local lsp_utils = require'utils.lsp'
 lsp_utils.map_methods(lsp_utils.all_methods())
 
--- Lsp setup.
-local function get_data_dir()
-  local data_dir = vim.fn.stdpath('data')
-  if type(data_dir) == 'table' then data_dir = data_dir[0] end
-  if data_dir == nil then
-    data_dir = vim.env.XDG_DATA_HOME or (vim.fn.expand('~/.local/share'))
-    data_dir = data_dir .. '/nvim'
-  end
-
-  return data_dir
-end
-
 local mason_root = require'mason.settings'.current.install_root_dir .. '/share'
 local project_name = vim.fn.fnamemodify(vim.fn.getcwd(), ':p:h:t')
 local jdtls_path = mason_root .. '/jdtls'
@@ -59,7 +47,7 @@ local client_id = require('jdtls').start_or_attach {
     '--add-opens', 'java.base/java.lang=ALL-UNNAMED',
     '-jar', jar,
     '-configuration', config,
-    '-data', workspace
+    '-data', workspace,
   },
   capabilities = lsp_utils.capabilities(),
   root_dir = vim.fs.root(0, { '.git', 'mvnw', 'gradlew' }),
@@ -71,14 +59,25 @@ local client_id = require('jdtls').start_or_attach {
       completion = {
         enabled = true,
         importOrder = {
+          'static',
           'java',
           'jakarta',
           'javax',
           'org',
           'com',
           'lombok',
-          'groovy'
+          'groovy',
+        },
+        favoriteStaticMembers = {
+          'org.assertj.core.api.Assertions.*',
+          'io.gatling.javaapi.core.CoreDsl.*',
+          'io.gatling.javaapi.http.HttpDsl.*',
+          'org.mockito.Mockito.*',
+          'org.mockito.ArgumentMatchers.*',
         }
+      },
+      codeGeneration = {
+        useStaticImports = true,
       },
       configuration = {
         -- See https://github.com/eclipse/eclipse.jdt.ls/wiki/Running-the-JAVA-LS-server-from-the-command-line#initialize-request
@@ -101,10 +100,10 @@ local client_id = require('jdtls').start_or_attach {
             name = 'JavaSE-23',
             path = vim.fn.expand(jdk_root .. '/23.*-tem/'),
           },
-        }
+        },
       },
-    }
-  }
+    },
+  },
 }
 
 -- Add event handler for when JDTLS is fully initialized
@@ -115,14 +114,14 @@ vim.api.nvim_create_autocmd('LspAttach', {
   callback = function(args)
     local client = vim.lsp.get_client_by_id(args.data.client_id)
     if client and client.name == 'jdtls' then
-      print("=== JDTLS INITIALIZATION ===")
-      print(string.format("✓ JDTLS fully initialized for buffer %d", args.buf))
-      print(string.format("✓ Client ID: %d", client.id))
-      print(string.format("✓ File: %s", vim.api.nvim_buf_get_name(args.buf)))
-      print(string.format("✓ Root directory: %s", client.config.root_dir or "Unknown"))
-      print(string.format("✓ Server capabilities loaded: %s", 
-        client.server_capabilities and "Yes" or "No"))
-      
+      -- vim.notify("=== JDTLS INITIALIZATION ===", vim.log.levels.INFO)
+      -- vim.notify(string.format("✓ JDTLS fully initialized for buffer %d", args.buf), vim.log.levels.INFO)
+      -- vim.notify(string.format("✓ Client ID: %d", client.id), vim.log.levels.INFO)
+      -- vim.notify(string.format("✓ File: %s", vim.api.nvim_buf_get_name(args.buf)), vim.log.levels.INFO)
+      -- vim.notify(string.format("✓ Root directory: %s", client.config.root_dir or "Unknown"), vim.log.levels.INFO)
+      -- vim.notify(string.format("✓ Server capabilities loaded: %s", 
+      --   client.server_capabilities and "Yes" or "No"), vim.log.levels.INFO)
+
       -- Attach navic for breadcrumbs
       local navic = require'nvim-navic'
       local bufnr = args.buf
@@ -130,33 +129,34 @@ vim.api.nvim_create_autocmd('LspAttach', {
       if navic then
         local buf_name = vim.api.nvim_buf_get_name(bufnr)
         local buf_filetype = vim.bo[bufnr].filetype
-        
+
         -- Print detailed navic attachment information
-        print("=== NAVIC ATTACHMENT INFO ===")
-        print(string.format("✓ Navic attached to buffer %d", bufnr))
-        print(string.format("✓ File: %s", buf_name))
-        print(string.format("✓ Filetype: %s", buf_filetype))
-        print(string.format("✓ LSP Client: %s (ID: %d)", client.name, client.id))
-        print(string.format("✓ Document symbols supported: %s", 
-          client.server_capabilities.documentSymbolProvider and "Yes" or "No"))
-        
+        -- vim.notify("=== NAVIC ATTACHMENT INFO ===", vim.log.levels.INFO)
+        -- vim.notify(string.format("✓ Navic attached to buffer %d", bufnr), vim.log.levels.INFO)
+        -- vim.notify(string.format("✓ File: %s", buf_name), vim.log.levels.INFO)
+        -- vim.notify(string.format("✓ Filetype: %s", buf_filetype), vim.log.levels.INFO)
+        -- vim.notify(string.format("✓ LSP Client: %s (ID: %d)", client.name, client.id), vim.log.levels.INFO)
+        -- vim.notify(string.format("✓ Document symbols supported: %s", 
+        --   client.server_capabilities.documentSymbolProvider and "Yes" or "No"), vim.log.levels.INFO)
+
         navic.attach(client, bufnr)
         vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
       end
-      
+
       -- Attach navbuddy for symbol navigation
       local navbuddy = require'nvim-navbuddy'
       if navbuddy then
-        print("✓ Navbuddy attached to JDTLS client")
+        -- vim.notify("✓ Navbuddy attached to JDTLS client", vim.log.levels.INFO)
         navbuddy.attach(client, bufnr)
       end
-      
-      print("============================")
+
+      -- vim.notify("============================", vim.log.levels.INFO)
     end
   end
 })
 
 vim.keymap.set('n', '<leader>oi', function() require'jdtls'.organize_imports() end, { desc = '[JDTLS] Organize imports'})
+vim.keymap.set('n', '<leader>ct', function() require'jdtls.tests'.generate() end, { desc = '[JDTLS] Generate test of this class'})
 
 -- vim.keymap.set(
 --   'n',

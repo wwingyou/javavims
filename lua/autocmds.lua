@@ -40,9 +40,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
         vim.diagnostic.open_float()
       end
     })
-
-    -- Reduce updatetime to open up diagnostic faster
-    vim.opt.updatetime=1000
   end
 })
 
