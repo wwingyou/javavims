@@ -31,50 +31,52 @@ return {
       desc = '[DEBUG] toggle breakpoints',
     },
     {
-      '<UP>',
-      function() require'dap'.step_out() end,
-      mode = 'n',
-      desc = '[DEBUG] step out',
-    },
-    {
-      '<DOWN>',
-      function() require'dap'.step_into() end,
-      mode = 'n',
-      desc = '[DEBUG] step into',
-    },
-    {
-      '<LEFT>',
-      function() require'dap'.step_over() end,
-      mode = 'n',
-      desc = '[DEBUG] step over',
-    },
-    {
-      '<RIGHT>',
+      '<leader>dd',
       function() require'dap'.continue() end,
       mode = 'n',
-      desc = '[DEBUG] continue',
+      desc = '[DEBUG] run debug',
     },
     {
-      '<leader>dd',
-      function() require'dap'.run_last() end,
+      '<leader>sd',
+      function() require'dap'.terminate() end,
       mode = 'n',
-      desc = '[DEBUG] re-run debugger',
+      desc = '[DEBUG] stop debug',
     }
   },
   config = function()
     local dap = require('dap')
     dap.listeners.before['launch']['jdtls'] = function(_, _)
       vim.cmd([[DapViewOpen]])
-      print("debuggin started")
+
+      vim.keymap.set("n", "<UP>", function()
+        dap.restart_frame()
+      end, { desc = "[DEBUG] restart frame" })
+
+      vim.keymap.set("n", "<DOWN>", function()
+        dap.step_over()
+      end, { desc = "[DEBUG] step over" })
+
+      vim.keymap.set("n", "<LEFT>", function()
+        dap.step_out()
+      end, { desc = "[DEBUG] step out" })
+
+      vim.keymap.set("n", "<RIGHT>", function()
+        dap.step_into()
+      end, { desc = "[DEBUG] step into" })
+
+      print("Debugging started")
     end
-        dap.listeners.before['attach']['jdtls'] = function(_, _)
-      vim.cmd([[DapViewOpen]])
-      print("debuggin attached")
-    end
-    dap.listeners.after['event_terminated']['jdtls'] = function(_, _)
+    dap.listeners.before['event_terminated']['jdtls'] = function(_, _)
       vim.cmd([[DapViewClose]])
+
+      vim.keymap.del("n", "<UP>")
+      vim.keymap.del("n", "<DOWN>")
+      vim.keymap.del("n", "<LEFT>")
+      vim.keymap.del("n", "<RIGHT>")
+
       print("The debugging process is terminated")
     end
-    vim.fn.sign_define('DapBreakpoint', {text='', texthl='Error', linehl='', numhl=''})
+
+    vim.fn.sign_define('DapBreakpoint', {text='', texthl='DapUIStop', linehl='', numhl=''})
   end
 }

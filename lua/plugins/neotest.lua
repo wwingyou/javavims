@@ -20,7 +20,7 @@ return {
     },
     keys = {
       {
-        '<leader>tR',
+        '<leader>rT',
         function()
           local neotest = require'neotest'
           neotest.run.run(vim.fn.expand('%'))
@@ -31,41 +31,24 @@ return {
         desc = '[Test] run test file',
       },
       {
-        '<leader>tr',
+        '<leader>rt',
         function() require'neotest'.run.run() end,
         mode = 'n',
         desc = '[Test] run nearest test',
       },
       {
-        '<leader>tD',
+        '<leader>dT',
         function()
-          local neotest = require'neotest'
-          neotest.run.run({ vim.fn.expand('%'), strategy = 'dap' })
-          neotest.summary.open()
-          neotest.output_panel.open()
+          require'jdtls'.test_class()
         end,
         mode = 'n',
         desc = '[Test] debug test file',
       },
       {
-        '<leader>td',
-        function() require'neotest'.run.run({ strategy = 'dap' }) end,
+        '<leader>dt',
+        function() require'jdtls'.test_nearest_method() end,
         mode = 'n',
         desc = '[Test] debug nearest test',
-      },
-      {
-        '<leader>tW',
-        function()
-          require'neotest'.watch.toggle({ vim.fn.expand('%'), strategy = 'dap' })
-        end,
-        mode = 'n',
-        desc = '[Test] toggle watch test file',
-      },
-      {
-        '<leader>tw',
-        function() require'neotest'.watch.toggle({ strategy = 'dap' }) end,
-        mode = 'n',
-        desc = '[Test] toggle watch nearest test',
       },
       {
         '<leader>ts',
@@ -93,7 +76,7 @@ return {
     config = function()
       require'neotest'.setup {
         adapters = {
-          require'neotest-java',
+          require'neotest-java'
         },
         output_panel = {
           open = '10sp'

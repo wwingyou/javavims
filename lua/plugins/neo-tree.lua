@@ -3,7 +3,7 @@ return {
   branch = "v3.x",
   keys = {
     {
-      '<leader>nt',
+      '\\',
       '<cmd>Neotree toggle<CR>',
       mode = 'n',
       desc = '[Test] run test file',

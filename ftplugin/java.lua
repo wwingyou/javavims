@@ -29,11 +29,11 @@ local java_test_plugins = vim.split(vim.fn.glob(java_test_path .. '/*.jar'), '\n
 local bundles = { java_debug_plugin }
 vim.list_extend(bundles, java_test_plugins)
 
-local jdk_root = '~/.sdkman/candidates/java'
+local jdk_root = os.getenv('HOME') .. '/.sdkman/candidates/java'
 local client_id = require('jdtls').start_or_attach {
   name = 'jdtls',
   cmd = {
-    'java',
+    jdk_root .. '/current/bin/java',
     '-Declipse.application=org.eclipse.jdt.ls.core.id1',
     '-Dosgi.bundles.defaultStartLevel=4',
     '-Declipse.product=org.eclipse.jdt.ls.core.product',
@@ -85,20 +85,8 @@ local client_id = require('jdtls').start_or_attach {
         -- The `name` is NOT arbitrary, but must match one of the elements from `enum ExecutionEnvironment` in the link above
         runtimes = {
           {
-            name = 'JavaSE-11',
-            path = vim.fn.expand(jdk_root .. '/11.*-tem/'),
-          },
-          {
-            name = 'JavaSE-17',
-            path = vim.fn.expand(jdk_root .. '/17.*-tem/'),
-          },
-          {
             name = 'JavaSE-21',
             path = vim.fn.expand(jdk_root .. '/21.*-tem/'),
-          },
-          {
-            name = 'JavaSE-23',
-            path = vim.fn.expand(jdk_root .. '/23.*-tem/'),
           },
         },
       },

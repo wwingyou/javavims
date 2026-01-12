@@ -6,7 +6,7 @@ return {
   },
   cmd = "Store",
   keys = {
-    { "<leader>s", "<cmd>Store<cr>", desc = "Open Plugin Store" },
+    { "<leader>ss", "<cmd>Store<cr>", desc = "Open Plugin Store" },
   },
   opts = {
     -- optional configuration here
